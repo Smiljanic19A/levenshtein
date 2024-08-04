@@ -1,5 +1,7 @@
 import Levenshtein
 import pysrt
+import webvtt
+
 
 
 paragraph1 = (r"""Oh, I love how music
@@ -191,6 +193,11 @@ def srt_to_text(file_path):
     for sub in subs:
         text += sub.text + "\n"
     return text.strip()
+def vtt_to_text(file_path):
+    text = ""
+    for caption in webvtt.read(file_path):
+        text += caption.text + "\n"
+    return text.strip()
 
 def isJunk(x):
     return x.isspace()
@@ -200,5 +207,5 @@ def compare_paragraphs(string1, string2):
 
     max_length = max(len(string1), len(string2))
     return (1 - distance / max_length) * 100
-print(compare_paragraphs(paragraph1, srt_to_text("C:/Users/SmiljanicA/Desktop/test.srt")))
+print(compare_paragraphs(vtt_to_text("C:/Users/SmiljanicA/Desktop/test.vtt"), srt_to_text("C:/Users/SmiljanicA/Desktop/test.srt")))
 
